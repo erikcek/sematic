@@ -25,6 +25,8 @@ import { User } from "./Models";
 import { Alert, Paper } from "@mui/material";
 import logo from "./Fox.png";
 import { fetchJSON } from "./utils";
+import {AdapterDateFns} from "@mui/x-date-pickers/AdapterDateFns";
+import {LocalizationProvider} from "@mui/x-date-pickers";
 import { SnackBarProvider } from "./components/SnackBarProvider";
 
 export const UserContext = React.createContext<{
@@ -109,20 +111,22 @@ function App() {
     <UserContext.Provider value={userContextValue}>
       <EnvContext.Provider value={envContextValue}>
         <SnackBarProvider>
-          <Routes>
-            <Route path="/" element={<Shell />}>
-              <Route path="" element={<Home />} />
-              <Route path="pipelines" element={<PipelineIndex />} />
-              <Route
-                path="pipelines/:calculatorPath/:rootId"
-                element={<PipelineView />}
-              />
-              <Route
-                path="pipelines/:calculatorPath"
-                element={<PipelineView />}
-              />
-            </Route>
-          </Routes>
+          <LocalizationProvider dateAdapter={AdapterDateFns}>
+            <Routes>
+              <Route path="/" element={<Shell />}>
+                <Route path="" element={<Home />} />
+                <Route path="pipelines" element={<PipelineIndex />} />
+                <Route
+                  path="pipelines/:calculatorPath/:rootId"
+                  element={<PipelineView />}
+                />
+                <Route
+                  path="pipelines/:calculatorPath"
+                  element={<PipelineView />}
+                />
+              </Route>
+            </Routes>
+          </LocalizationProvider>
         </SnackBarProvider>
       </EnvContext.Provider>
     </UserContext.Provider>

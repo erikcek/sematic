@@ -25,8 +25,12 @@ import {
   ListItem,
   TableHead,
   Button,
+  TextField,
+  TextFieldProps,
 } from "@mui/material";
 import { OpenInNew } from "@mui/icons-material";
+import { DateTimePicker } from '@mui/x-date-pickers';
+
 const Plot = createPlotlyComponent(Plotly);
 
 type TypeCategory = "builtin" | "typing" | "dataclass" | "generic" | "class";
@@ -691,6 +695,24 @@ function LinkValueView(props: ValueViewProps) {
   );
 }
 
+function DatetimeValueView(props: ValueViewProps) {
+  let {valueSummary} = props;
+  let {values} = valueSummary;
+  console.log(values);
+  return (
+      <DateTimePicker
+          label={values.label}
+          readOnly={true}
+          inputFormat={values.display_format}
+          onChange={() => {}}
+          renderInput={(params: JSX.IntrinsicAttributes & TextFieldProps) => {
+            return <TextField {...params} />;
+          }}
+          value={new Date(values.iso_string)}
+    />
+  );
+}
+
 type ComponentPair = {
   type: (props: TypeViewProps) => JSX.Element;
   value: (props: ValueViewProps) => JSX.Element;
@@ -709,6 +731,7 @@ const TypeComponents: Map<string, ComponentPair> = new Map([
   ["dataclass", { type: DataclassTypeView, value: DataclassValueView }],
   ["Union", { type: UnionTypeView, value: ValueView }],
   ["Link", { type: TypeView, value: LinkValueView }],
+  ["Datetime", {type: TypeView, value: DatetimeValueView}],
   [
     "torch.utils.data.dataloader.DataLoader",
     { type: TypeView, value: TorchDataLoaderValueView },

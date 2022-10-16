@@ -82,3 +82,11 @@ pytest_test(
         "//sematic/types/types:link",
     ],
 )
+
+pytest_test(
+    name = "test_datetime",
+    srcs = ["test_datetime.py"],
+    deps = [
+        "//sematic/types/types:datetime",
+    ],
+)

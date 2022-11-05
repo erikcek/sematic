@@ -88,5 +88,7 @@ pytest_test(
     srcs = ["test_datetime.py"],
     deps = [
         "//sematic/types/types:datetime",
+        "//sematic/types:init",
+        "//sematic/types:serialization",
     ],
 )

@@ -1,42 +1,29 @@
+"""
+Datetime lets user display native python datetime object in the UI with specified
+formatting
+"""
 # Standard Library
-from dataclasses import dataclass
+import typing
 from datetime import datetime
 
+# Sematic
+from sematic.types.registry import (
+    register_from_json_encodable,
+    register_to_json_encodable,
+    register_to_json_encodable_summary,
+)
 
-@dataclass
-class Datetime:
-    """
-      Datetime lets user display native python object in the UI with specified
-        formating
 
-      Parameters
-      ----------
-      datetime_value: datetime
-          The datetime python object
-      label: str
-          The label of the datetime
-      display_format: str
-          Format of the date and time in the UI.
-          See https://date-fns.org/v2.25.0/docs/format for more format information.
+@register_to_json_encodable_summary(datetime)
+def _datetime_summary(value: datetime, _) -> str:
+    return value.isoformat()
 
-    Raises
-    ------
-    ValueError
-        no display_format is specified
-    """
 
-    iso_string: str
-    label: str
-    display_format: str
+@register_to_json_encodable(datetime)
+def _datetime_to_encodable(value: datetime, type_: typing.Type[datetime]) -> str:
+    return value.isoformat()
 
-    def __init__(
-        self,
-        datetime_value: datetime,
-        label: str,
-        display_format: str = "MM/dd/yyyy HH:mm",
-    ):
-        if display_format == "":
-            raise ValueError("No date time display format specified")
-        self.iso_string = datetime_value.isoformat()
-        self.label = label
-        self.display_format = display_format
+
+@register_from_json_encodable(datetime)
+def _datetime_from_encodable(value: str, type_: typing.Type[datetime]) -> datetime:
+    return datetime.fromisoformat(value)

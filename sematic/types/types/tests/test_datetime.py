@@ -1,28 +1,29 @@
-# Third-party
 # Standard Library
 from datetime import datetime
 
+# Third-party
 import pytest
 
 # Sematic
-from sematic.types.types.datetime import Datetime
-
-
-def test_datetime_iso_string_valid():
-    now = datetime.now()
-    display_format = "MM/dd/yyyy HH:mm"
-    label = "Default datetime format"
-    datetime_component = Datetime(now, label, display_format)
-    assert datetime_component.label == label
-    assert datetime_component.display_format == display_format
-    assert datetime_component.iso_string == now.isoformat()
-
-
-@pytest.mark.parametrize(
-    "expected_exception_str, display_format",
-    (("No date time display format specified", ""),),
+from sematic.types.serialization import (
+    get_json_encodable_summary,
+    value_from_json_encodable,
+    value_to_json_encodable,
 )
-def test_url_validation_fail(expected_exception_str, display_format):
-    # with pytest.raises(ValueError, match=expected_exception_str):
-    with pytest.raises(ValueError, match=expected_exception_str):
-        Datetime(datetime.now(), label="test label", display_format=display_format)
+
+
+def test_dict_summary():
+    date = datetime.now()
+    summary = get_json_encodable_summary(date, datetime)
+
+    assert summary == date
+
+
+SERIALIZATION_EXAMPLES = [(datetime.now(), datetime), (datetime.today(), datetime)]
+
+
+@pytest.mark.parametrize("value, type_", SERIALIZATION_EXAMPLES)
+def test_value_serdes(value, type_):
+    serialized = value_to_json_encodable(value, type_)
+    deserialized = value_from_json_encodable(serialized, type_)
+    assert deserialized == value

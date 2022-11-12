@@ -16,7 +16,7 @@ def test_dict_summary():
     date = datetime.now()
     summary = get_json_encodable_summary(date, datetime)
 
-    assert summary == date
+    assert summary == date.isoformat()
 
 
 SERIALIZATION_EXAMPLES = [(datetime.now(), datetime), (datetime.today(), datetime)]

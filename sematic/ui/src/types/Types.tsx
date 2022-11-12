@@ -263,7 +263,16 @@ function ListValueView(props: ValueViewProps) {
           </TableCell>
           <TableCell>{props.valueSummary["length"]}</TableCell>
         </TableRow>
-
+        <TableRow>
+          <TableCell>
+            <b>Excerpt</b>
+          </TableCell>
+          <TableCell>
+            {summary} and{" "}
+            {props.valueSummary["length"] - props.valueSummary["summary"].length}{" "}
+             more items.
+          </TableCell>
+        </TableRow>
       </TableBody>
     </Table>
   );
@@ -668,7 +677,6 @@ function DataFrameValueView(props: ValueViewProps) {
 }
 
 function LinkValueView(props: ValueViewProps) {
-  console.log(props)
   let { valueSummary } = props;
   let { values } = valueSummary;
 
@@ -692,7 +700,7 @@ function DatetimeValueView(props: ValueViewProps) {
       return <Alert severity="error">Incorrect date value.</Alert>;
   }
   return (
-      <Typography>{format(date, "dd.MM.yyyy HH:mm")}</Typography>
+      <Typography>{format(date, "LLLL d, yyyy h:mm:ss a xxx", )}</Typography>
   );
 }
 

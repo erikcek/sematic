@@ -46,8 +46,8 @@ def test_is_dataclass_on_instance_with_parent_dataclass():
 def test_decode_string_valid_base64():
     assert binary_to_string(base64.b64decode("test".encode("ascii"))) == "test"
 
-# def test_decode_string_special_chars_base64():
-#     assert binary_to_string(binary_from_string("šččťžô")) == "šččťžô"
+def test_decode_string_special_chars_base64():
+    assert binary_to_string(binary_from_string("šččťžô")) == "šččťžô"
 
 def test_encode_decode_series():
     assert binary_to_string(binary_from_string("test")) == "test"
@@ -57,9 +57,12 @@ def test_encode_decode_series():
 # binary serialization tests
 ######################################################
 
-GET_KEY_EXAMPLES = [(float, "float"), (int, "int"), (str, 'str'), (bool, "bool")]
+def test_get_key_for_float_pipeline_type():
+    assert _get_key(float) == "float"
+def test_get_key_for_integer_pipeline_type():
+    assert _get_key(int) == "int"
+def test_get_key_for_string_pipeline_type():
+    assert _get_key(str) == "str"
 
-
-@pytest.mark.parametrize("type, key", GET_KEY_EXAMPLES)
-def test_get_key(type, key):
-    assert _get_key(type) == key
+def test_get_key_for_voolean_pipeline_type():
+    assert _get_key(bool) == "bool"

@@ -1,4 +1,5 @@
 # Standard Library
+import datetime
 import time
 
 # Sematic
@@ -23,7 +24,7 @@ def add3(a: float, b: float, c: float) -> float:
 
 
 @sematic.func
-def pipeline(a: float, b: float, c: float) -> float:
+def pipeline(a: float, b: float, c: float) -> datetime.datetime:
     """
     ## This is the docstring
 
@@ -36,7 +37,8 @@ def pipeline(a: float, b: float, c: float) -> float:
 
     `pretty_cool`.
     """
-    sum1 = add(a, b)
-    sum2 = add(b, c)
-    sum3 = add(a, c)
-    return add3(sum1, sum2, sum3)
+    return datetime.datetime.now()
+    # sum1 = add(a, b)
+    # sum2 = add(b, c)
+    # sum3 = add(a, c)
+    # return add3(sum1, sum2, sum3)

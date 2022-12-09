@@ -27,3 +27,4 @@ def test_value_serdes(value, type_):
     serialized = value_to_json_encodable(value, type_)
     deserialized = value_from_json_encodable(serialized, type_)
     assert deserialized == value
+
